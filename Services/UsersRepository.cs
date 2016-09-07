@@ -38,5 +38,20 @@ namespace CloudFs.Services
         {
             return _allUsers.Values;
         }
+
+        public bool GetById(Guid id, out UserForm user)
+        {
+            bool result = false;
+            user = null;
+
+            if(_allUsers.ContainsKey(id))
+            {
+                result = true;
+
+                user = _allUsers[id];
+            }            
+
+            return result;
+        }
     }
 }

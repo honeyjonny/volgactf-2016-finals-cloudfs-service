@@ -1,4 +1,5 @@
 using CloudFs.Services;
+using CloudFS.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +16,10 @@ namespace CloudFs
         }
 
         public void Configure(IApplicationBuilder app)
-        {   
+        {  
+
+            app.UseAuthRequest();
+
             app.UseMvc();    
         }
     }

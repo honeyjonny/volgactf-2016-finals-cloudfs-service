@@ -24,6 +24,24 @@ namespace CloudFs.Controllers
             return Json(users);
         }
 
+
+        [HttpGet]
+        [RouteAttribute("/home")]
+        public async Task<IActionResult> GetHome()
+        {
+            var user = Request.HttpContext.Items["user"] as UserForm;
+
+            if(user != null)
+            {
+                var v = string.Format("Hello {0}", user.Username);
+                return Json(v);
+            }
+            else
+            {
+                return Json("not user");
+            }
+        }
+
         [HttpPost]
         [Route("api/users")]
         public async Task<IActionResult> RegisterUser([FromBody] UserForm newUserForm)
