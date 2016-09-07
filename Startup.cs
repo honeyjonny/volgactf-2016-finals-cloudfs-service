@@ -1,16 +1,22 @@
+using CloudFs.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CloudFs
 {
     public class Startup
     {
-        public void Configure(IApplicationBuilder app)
+        public void ConfigureServices(IServiceCollection services)
         {
-            app.Run(context =>
-            {
-                return context.Response.WriteAsync("Hello");
-            });   
+            services.AddMvc();
+
+            services.AddSingleton<IUsersRepository,UsersRepository>();
+        }
+
+        public void Configure(IApplicationBuilder app)
+        {   
+            app.UseMvc();    
         }
     }
 }
