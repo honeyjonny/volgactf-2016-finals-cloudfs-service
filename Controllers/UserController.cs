@@ -3,6 +3,7 @@ using CloudFs.Models;
 using CloudFs.Services;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using CloudFS.Controllers;
 
 namespace CloudFs.Controllers
 {
@@ -26,12 +27,12 @@ namespace CloudFs.Controllers
 
 
         [HttpGet]
-        [RouteAttribute("/home")]
+        [RouteAttribute("/test")]
         public async Task<IActionResult> GetHome()
         {
-            var user = Request.HttpContext.Items["user"] as UserForm;
+            UserForm user;
 
-            if(user != null)
+            if(Request.GetUser(out user))
             {
                 var v = string.Format("Hello {0}", user.Username);
                 return Json(v);

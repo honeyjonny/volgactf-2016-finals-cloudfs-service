@@ -3,35 +3,40 @@ using System;
 using System.Threading.Tasks;
 using CloudFs.Models;
 using CloudFs.Services;
+using CloudFS.Controllers;
 using Microsoft.AspNetCore.Http;
 
 namespace CloudFs.Controllers
 {
     public class AuthRequestMiddleware
     {
-        private static string COOKIE_KEY = @"apptoken";
         private readonly RequestDelegate _next;
         private readonly IUsersRepository _usersRepo;
+        private readonly ISessionRepository _sessions;
 
-        public AuthRequestMiddleware (RequestDelegate next, IUsersRepository usersRepo)
+        public AuthRequestMiddleware (
+            RequestDelegate next, 
+            IUsersRepository usersRepo,
+            ISessionRepository sessionsRepo)
         {
             _next = next;
             _usersRepo = usersRepo;
+            _sessions = sessionsRepo;
         }
 
         public async Task Invoke(HttpContext context)
         {
-            if(context.Request.Cookies.ContainsKey(COOKIE_KEY))
+            string cookieValue;
+
+            if(context.Request.GetCookie(out cookieValue))
             {
-                var cookieValue = context.Request.Cookies[COOKIE_KEY];
-
-                Guid userId = Guid.Parse(cookieValue);
-
+                Guid userId;
                 UserForm user;
 
-                if(_usersRepo.GetById(userId, out user))
+                if(_sessions.GetUserIdBySessionCookie(cookieValue, out userId) 
+                    && _usersRepo.GetById(userId, out user))
                 {
-                    context.Items["user"] = user; 
+                    context.Items[Consts.USER_ITEM] = user; 
                 }
             }
 
