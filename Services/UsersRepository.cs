@@ -10,9 +10,12 @@ namespace CloudFs.Services
     {
         private readonly IDictionary<Guid, UserForm> _allUsers;
 
-        public UsersRepository ()
+        private readonly AppDbContext _dbcontext;
+
+        public UsersRepository (AppDbContext dbContext)
         {
-          _allUsers = new Dictionary<Guid, UserForm>();
+            _allUsers = new Dictionary<Guid, UserForm>();
+            _dbcontext = dbContext;
         }
 
         public bool AddUser(UserForm newUser)
@@ -27,6 +30,9 @@ namespace CloudFs.Services
             if(!_allUsers.ContainsKey(newUser.Id))
             {
                 _allUsers.Add(newUser.Id, newUser);
+
+                _dbcontext.Add(newUser);
+                _dbcontext.SaveChanges();
 
                 result = true;
             }

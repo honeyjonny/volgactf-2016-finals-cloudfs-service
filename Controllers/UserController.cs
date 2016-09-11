@@ -4,16 +4,21 @@ using CloudFs.Services;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using CloudFS.Controllers;
+using System;
 
 namespace CloudFs.Controllers
 {
     public class UserController: Controller
     {
         private readonly IUsersRepository _usersRepo;
+        private readonly IFoldersRepository _folders;
 
-        public UserController (IUsersRepository repo)
+        public UserController (
+            IUsersRepository repo)
+            //IFoldersRepository folders)
         {
           _usersRepo = repo;
+          //_folders = folders;
         }
 
         [HttpGet]
@@ -25,35 +30,20 @@ namespace CloudFs.Controllers
             return Json(users);
         }
 
-
-        [HttpGet]
-        [RouteAttribute("/test")]
-        public async Task<IActionResult> GetHome()
-        {
-            UserForm user;
-
-            if(Request.GetUser(out user))
-            {
-                var v = string.Format("Hello {0}", user.Username);
-                return Json(v);
-            }
-            else
-            {
-                return Json("not user");
-            }
-        }
-
         [HttpPost]
         [Route("api/users")]
-        public async Task<IActionResult> RegisterUser([FromBody] UserForm newUserForm)
+        public async Task<IActionResult> RegisterUser(
+            [FromBody] UserForm newUserForm)
         {
             IActionResult result;
 
-            bool success = _usersRepo.AddUser(newUserForm);
-
-            if(success)
+            if(_usersRepo.AddUser(newUserForm))
             {
-                result = Created(newUserForm.Id.ToString(), newUserForm);
+                //Guid rootId = _folders.CreateRootFolder();
+
+                //var rootUri = string.Format("api/folders/{0}", rootId.ToString("N"));
+
+                result = Created("created", newUserForm);
             }
             else
             {

@@ -8,7 +8,7 @@ namespace CloudFs.Services
 {
     public interface IFoldersRepository
     {
-        Guid CreateRootForUser(UserForm userForm);
+        Guid CreateRootFolder();
 
         bool AddFolder(FolderForm newFolder);
 
