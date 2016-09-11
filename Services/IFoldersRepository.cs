@@ -12,6 +12,10 @@ namespace CloudFs.Services
 
         bool AddFolder(FolderForm newFolder);
 
-        IEnumerable<FolderForm> GetChildsFolders(FolderForm parentFolder);        
+        bool GetFolderById(Guid folderId, out FolderForm folder);
+
+        IEnumerable<FolderForm> GetChildsFolders(Guid parentId);
+
+        IEnumerable<FileForm> GetFilesInFolder(Guid folderId);        
     }
 }
