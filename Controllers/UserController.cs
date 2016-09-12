@@ -14,11 +14,11 @@ namespace CloudFs.Controllers
         private readonly IFoldersRepository _folders;
 
         public UserController (
-            IUsersRepository repo)
-            //IFoldersRepository folders)
+            IUsersRepository repo,
+            IFoldersRepository folders)
         {
           _usersRepo = repo;
-          //_folders = folders;
+          _folders = folders;
         }
 
         [HttpGet]
@@ -39,11 +39,11 @@ namespace CloudFs.Controllers
 
             if(_usersRepo.AddUser(newUserForm))
             {
-                //Guid rootId = _folders.CreateRootFolder();
+                Guid rootId = _folders.CreateRootFolder(newUserForm.Id);
 
-                //var rootUri = string.Format("api/folders/{0}", rootId.ToString("N"));
+                var rootUri = string.Format("api/folders/{0}", rootId.ToString("N"));
 
-                result = Created("created", newUserForm);
+                result = Created(rootUri, newUserForm);
             }
             else
             {

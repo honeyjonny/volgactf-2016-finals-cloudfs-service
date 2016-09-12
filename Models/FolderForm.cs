@@ -15,5 +15,8 @@ namespace CloudFs.Models
 
         [JsonProperty("foldername")]
         public string Foldername {get;set;} 
+
+        [JsonProperty("ownerId")]
+        public Guid OwnerId {get;set;}
     }
 }

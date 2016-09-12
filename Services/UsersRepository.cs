@@ -2,19 +2,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CloudFs.Models;
 
 namespace CloudFs.Services
 {
     public class UsersRepository : IUsersRepository
     {
-        private readonly IDictionary<Guid, UserForm> _allUsers;
-
         private readonly AppDbContext _dbcontext;
 
         public UsersRepository (AppDbContext dbContext)
         {
-            _allUsers = new Dictionary<Guid, UserForm>();
             _dbcontext = dbContext;
         }
 
@@ -27,10 +25,12 @@ namespace CloudFs.Services
                 newUser.Id = Guid.NewGuid();
             }
 
-            if(!_allUsers.ContainsKey(newUser.Id))
-            {
-                _allUsers.Add(newUser.Id, newUser);
+            var user = _dbcontext
+                .Users
+                .SingleOrDefault(x => x.Id == newUser.Id);
 
+            if(user == null)
+            {
                 _dbcontext.Add(newUser);
                 _dbcontext.SaveChanges();
 
@@ -42,20 +42,21 @@ namespace CloudFs.Services
 
         public IEnumerable<UserForm> GetAllUsers()
         {
-            return _allUsers.Values;
+            return _dbcontext.Users.ToList();
         }
 
         public bool GetById(Guid id, out UserForm user)
         {
             bool result = false;
-            user = null;
 
-            if(_allUsers.ContainsKey(id))
+            user = _dbcontext
+                .Users
+                .SingleOrDefault(x => x.Id == id);      
+
+            if(user != null)
             {
                 result = true;
-
-                user = _allUsers[id];
-            }            
+            }      
 
             return result;
         }

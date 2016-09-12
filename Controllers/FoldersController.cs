@@ -25,8 +25,11 @@ namespace CloudFs.Controllers
             IActionResult result;
             UserForm user;
 
-            if(Request.GetUser(out user))
+            if(Request.GetUser(out user)
+                && newFolderForm.ParentId != Guid.Empty)
             {
+                newFolderForm.OwnerId = user.Id;
+
                 if(_foldersRepo.AddFolder(newFolderForm))
                 {
                     var uri = string.Format("api/folders/{0}", newFolderForm.Id.ToString("N"));
@@ -57,13 +60,14 @@ namespace CloudFs.Controllers
             {
                 FolderForm folder;
 
-                if (_foldersRepo.GetFolderById(folderId, out folder))
+                if (_foldersRepo.GetFolderById(folderId, out folder)
+                    && folder.OwnerId == user.Id)
                 {
                     result = Ok(folder);
                 }
                 else
                 {
-                    result = NotFound(folderId);
+                    result = NoContent();
                 }
             }
             else

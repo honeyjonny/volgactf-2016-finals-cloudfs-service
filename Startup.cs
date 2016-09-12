@@ -20,9 +20,17 @@ namespace CloudFs
                     options.UseNpgsql(Consts.CONNECTION_STRING);                    
                 });
 
-            services.AddSingleton<IUsersRepository,UsersRepository>();
+            services.AddScoped<IUsersRepository,UsersRepository>();
+            services.AddScoped<IFoldersRepository, FoldersRepository>();
 
             services.AddSingleton<ISessionRepository, SessionRepository>();
+
+            var serviceProvider = services.BuildServiceProvider();
+
+            serviceProvider
+                .GetService<AppDbContext>()
+                .Database
+                .EnsureCreated();                
         }
 
         public void Configure(IApplicationBuilder app)

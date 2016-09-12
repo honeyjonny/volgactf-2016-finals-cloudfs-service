@@ -20,5 +20,8 @@ namespace CloudFs.Models
 
         [JsonPropertyAttribute("checksum")]
         public string Checksum {get;set;}
+
+        [JsonProperty("ownerId")]
+        public Guid OwnerId {get;set;}
     }
 }
