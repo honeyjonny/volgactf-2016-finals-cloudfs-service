@@ -3,6 +3,7 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
+using CloudFd.Services;
 using CloudFs.Models;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -31,20 +32,15 @@ namespace CloudFs.Services
         {
             var sha512 = SHA512.Create();
 
-            var plaintext = string.Format("{0}+{1}+{2}+VolgaCTF{3}", 
+            var plaintext = string.Format("{0}+VolgaCTF{1}:{2}", 
                 user.Id.ToString("N"),
-                user.Username,
-                user.Password,
-                DateTime.Now.Year);
+                DateTime.Now.Year,
+                DateTime.Now.Hour);
 
-            var hash = sha512.ComputeHash(Encoding.UTF8.GetBytes(plaintext));
+            var apptoken = sha512.GetHashForString(plaintext);
 
-            var apptoken = BitConverter
-                .ToString(hash)
-                .Replace("-", "")
-                .ToLower();
-
-            var cacheEntryOptions = new MemoryCacheEntryOptions()
+            var cacheEntryOptions = 
+                new MemoryCacheEntryOptions()
                 .SetSlidingExpiration(TimeSpan.FromMinutes(5));
 
             var res = _cache.Set(apptoken, user.Id, cacheEntryOptions);

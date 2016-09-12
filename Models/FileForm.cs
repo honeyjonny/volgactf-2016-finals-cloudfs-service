@@ -18,7 +18,7 @@ namespace CloudFs.Models
         [JsonProperty("content")]
         public string Content {get;set;}
 
-        [JsonPropertyAttribute("checksum")]
+        [JsonProperty("checksum")]
         public string Checksum {get;set;}
 
         [JsonProperty("ownerId")]

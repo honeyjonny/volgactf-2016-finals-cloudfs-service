@@ -36,7 +36,9 @@ namespace CloudFs.Controllers
             {
                 UserForm user;
 
-                if (_users.GetById(userId, out user))
+                if (_users.GetById(userId, out user)
+                    && userForm.Username.Equals(user.Username)
+                    && userForm.Password.Equals(user.Password))
                 {
                     var apptokenValue = _sessions.SetSessionForUser(user);
 

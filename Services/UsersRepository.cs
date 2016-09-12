@@ -42,7 +42,14 @@ namespace CloudFs.Services
 
         public IEnumerable<UserForm> GetAllUsers()
         {
-            return _dbcontext.Users.ToList();
+            return _dbcontext
+                .Users
+                .Select(x => new UserForm
+                    {
+                        Id = x.Id,
+                        Username = x.Username
+                    })
+                .ToList();
         }
 
         public bool GetById(Guid id, out UserForm user)

@@ -28,6 +28,8 @@ namespace CloudFs.Controllers
 
             if(Request.GetUser(out user))
             {
+                newFileForm.OwnerId = user.Id;
+
                 if(_filesRepo.AddFile(newFileForm))
                 {
                     var uri = string.Format("api/files/{0}", newFileForm.Id.ToString("N"));
@@ -60,7 +62,8 @@ namespace CloudFs.Controllers
                 FileForm file;
 
                 if(_filesRepo.GetFileById(fileId, out file)
-                    && file.Checksum.Equals(checksum))
+                    && file.Checksum.Equals(checksum)
+                    && file.OwnerId == user.Id)
                 {
                     result = Ok(file);
                 }

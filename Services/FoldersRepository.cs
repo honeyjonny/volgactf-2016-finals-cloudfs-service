@@ -30,7 +30,7 @@ namespace CloudFs.Services
                 .Folders
                 .SingleOrDefault(x => x.Id == newFolder.Id);
 
-            if (folder == null 
+            if (folder == null
                 && newFolder.Foldername.Length > 0
                 && newFolder.ParentId != Guid.Empty
                 && newFolder.OwnerId != Guid.Empty)
@@ -49,12 +49,12 @@ namespace CloudFs.Services
             var rootId = Guid.NewGuid();
 
             var newRoot = new FolderForm()
-                {
-                    Id = rootId,
-                    ParentId = Guid.Empty,
-                    Foldername = "Root",
-                    OwnerId = ownerId                
-                };
+            {
+                Id = rootId,
+                ParentId = Guid.Empty,
+                Foldername = "Root",
+                OwnerId = ownerId
+            };
 
             _dbContext.Folders.Add(newRoot);
             _dbContext.SaveChanges();
@@ -73,7 +73,15 @@ namespace CloudFs.Services
         {
             return _dbContext
                 .Files
-                .Where(x => x.FolderId == folderId);
+                .Where(x => x.FolderId == folderId)
+                .Select(x => new FileForm
+                    {
+                        Id = x.Id,
+                        FolderId = x.FolderId,
+                        Filename = x.Filename,
+                        Checksum = x.Checksum,
+                        OwnerId = x.OwnerId
+                    });
         }
 
         public bool GetFolderById(Guid folderId, out FolderForm folder)
@@ -83,8 +91,8 @@ namespace CloudFs.Services
             folder = _dbContext
                 .Folders
                 .SingleOrDefault(x => x.Id == folderId);
-            
-            if(folder != null)
+
+            if (folder != null)
             {
                 result = true;
             }
