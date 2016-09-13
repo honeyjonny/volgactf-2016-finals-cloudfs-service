@@ -32,7 +32,7 @@ namespace CloudFs.Controllers
 
                 if(_filesRepo.AddFile(newFileForm))
                 {
-                    var uri = string.Format("api/files/{0}", newFileForm.Id.ToString("N"));
+                    var uri = string.Format("api/files/{0}", newFileForm.Id.ToString());
                     result = Created(uri, newFileForm);
                 }
                 else

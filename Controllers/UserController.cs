@@ -42,7 +42,7 @@ namespace CloudFs.Controllers
             {
                 Guid rootId = _folders.CreateRootFolder(newUserForm.Id);
 
-                var rootUri = string.Format("api/folders/{0}", rootId.ToString("N"));
+                var rootUri = string.Format("api/folders/{0}", rootId.ToString());
 
                 result = Created(rootUri, newUserForm);
             }

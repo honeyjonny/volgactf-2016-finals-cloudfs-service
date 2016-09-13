@@ -32,7 +32,7 @@ namespace CloudFs.Controllers
 
                 if(_foldersRepo.AddFolder(newFolderForm))
                 {
-                    var uri = string.Format("api/folders/{0}", newFolderForm.Id.ToString("N"));
+                    var uri = string.Format("api/folders/{0}", newFolderForm.Id.ToString());
                     result = Created(uri, newFolderForm);
                 }
                 else

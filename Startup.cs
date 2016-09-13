@@ -22,6 +22,7 @@ namespace CloudFs
 
             services.AddScoped<IUsersRepository,UsersRepository>();
             services.AddScoped<IFoldersRepository, FoldersRepository>();
+            services.AddScoped<IFilesRepository, FilesRepository>();
 
             services.AddSingleton<ISessionRepository, SessionRepository>();
 

@@ -24,7 +24,9 @@ namespace CloudFs.Controllers
 
         [HttpPost]
         [Route("/api/auth/{userId}/login")]
-        public async Task<IActionResult> LoginHandler([FromRoute] Guid userId, UserForm userForm)
+        public async Task<IActionResult> LoginHandler(
+            [FromRoute] Guid userId, 
+            [FromBody] UserForm userForm)
         {
             IActionResult result;
 
@@ -59,7 +61,8 @@ namespace CloudFs.Controllers
 
         [HttpPost]
         [Route("/api/auth/{userId}/logout")]
-        public async Task<IActionResult> LogoutHandler([FromRoute] Guid userId)
+        public async Task<IActionResult> LogoutHandler(
+            [FromRoute] Guid userId)
         {
             IActionResult result;
             UserForm user;
