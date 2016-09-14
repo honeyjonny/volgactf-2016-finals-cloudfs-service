@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CloudFs.Models;
 
 namespace CloudFs.Services
@@ -16,7 +17,7 @@ namespace CloudFs.Services
             _dbContext = dbContext;
         }
 
-        public bool AddFolder(FolderForm newFolder)
+        public async Task<bool> AddFolder(FolderForm newFolder)
         {
             bool result = false;
 
@@ -36,7 +37,7 @@ namespace CloudFs.Services
                 && newFolder.OwnerId != Guid.Empty)
             {
                 _dbContext.Folders.Add(newFolder);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
 
                 result = true;
             }
@@ -44,7 +45,7 @@ namespace CloudFs.Services
             return result;
         }
 
-        public Guid CreateRootFolder(Guid ownerId)
+        public async Task<Guid> CreateRootFolder(Guid ownerId)
         {
             var rootId = Guid.NewGuid();
 
@@ -57,7 +58,7 @@ namespace CloudFs.Services
             };
 
             _dbContext.Folders.Add(newRoot);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
 
             return rootId;
         }

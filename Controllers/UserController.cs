@@ -38,9 +38,9 @@ namespace CloudFs.Controllers
         {
             IActionResult result;
 
-            if(_usersRepo.AddUser(newUserForm))
+            if(await _usersRepo.AddUser(newUserForm))
             {
-                Guid rootId = _folders.CreateRootFolder(newUserForm.Id);
+                Guid rootId = await _folders.CreateRootFolder(newUserForm.Id);
 
                 var rootUri = string.Format("api/folders/{0}", rootId.ToString());
 

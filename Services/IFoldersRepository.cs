@@ -2,15 +2,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using CloudFs.Models;
 
 namespace CloudFs.Services
 {
     public interface IFoldersRepository
     {
-        Guid CreateRootFolder(Guid ownerId);
+        Task<Guid> CreateRootFolder(Guid ownerId);
 
-        bool AddFolder(FolderForm newFolder);
+        Task<bool> AddFolder(FolderForm newFolder);
 
         bool GetFolderById(Guid folderId, out FolderForm folder);
 

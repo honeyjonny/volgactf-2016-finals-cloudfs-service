@@ -30,7 +30,7 @@ namespace CloudFs.Controllers
             {
                 newFolderForm.OwnerId = user.Id;
 
-                if(_foldersRepo.AddFolder(newFolderForm))
+                if(await _foldersRepo.AddFolder(newFolderForm))
                 {
                     var uri = string.Format("api/folders/{0}", newFolderForm.Id.ToString());
                     result = Created(uri, newFolderForm);

@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using CloudFd.Services;
 using CloudFs.Models;
 
@@ -17,7 +18,7 @@ namespace CloudFs.Services
             _dbContext = dbContext;
         }
 
-        public bool AddFile(FileForm newFile)
+        public async Task<bool> AddFile(FileForm newFile)
         {
             bool result = false;
 
@@ -41,7 +42,7 @@ namespace CloudFs.Services
                 newFile.Checksum = md5.GetHashForString(newFile.Content);
 
                 _dbContext.Files.Add(newFile);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
 
                 result = true;
             }

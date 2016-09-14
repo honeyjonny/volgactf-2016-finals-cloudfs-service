@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CloudFs.Models;
 
 namespace CloudFs.Services
@@ -16,7 +17,7 @@ namespace CloudFs.Services
             _dbcontext = dbContext;
         }
 
-        public bool AddUser(UserForm newUser)
+        public async Task<bool> AddUser(UserForm newUser)
         {
             bool result = false;
 
@@ -32,7 +33,7 @@ namespace CloudFs.Services
             if(user == null)
             {
                 _dbcontext.Add(newUser);
-                _dbcontext.SaveChanges();
+                await _dbcontext.SaveChangesAsync();
 
                 result = true;
             }
@@ -48,8 +49,7 @@ namespace CloudFs.Services
                     {
                         Id = x.Id,
                         Username = x.Username
-                    })
-                .ToList();
+                    });
         }
 
         public bool GetById(Guid id, out UserForm user)

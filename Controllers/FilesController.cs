@@ -30,7 +30,7 @@ namespace CloudFs.Controllers
             {
                 newFileForm.OwnerId = user.Id;
 
-                if(_filesRepo.AddFile(newFileForm))
+                if(await _filesRepo.AddFile(newFileForm))
                 {
                     var uri = string.Format("api/files/{0}", newFileForm.Id.ToString());
                     result = Created(uri, newFileForm);
