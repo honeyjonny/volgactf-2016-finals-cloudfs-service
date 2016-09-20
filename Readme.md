@@ -3,7 +3,7 @@
 
 This is a service for [VolgaCTF 2016 Finals](https://volgactf.ru/) competition.
 
-Backend rest-like web api application, based on [.NET Core](https://www.microsoft.com/net/core) and [ASP.NET Core](http://www.asp.net/core) platfolms.
+Backend rest-like web api application, based on [.NET Core](https://www.microsoft.com/net/core), [ASP.NET Core](http://www.asp.net/core) and [EntityFramework Core](https://docs.efproject.net/en/latest/) platfolms.
 On build application assembled as self-contained for specified OS platform.
 
 For storing application data used [PostgreSQL](https://www.postgresql.org/) 9.4 database.
