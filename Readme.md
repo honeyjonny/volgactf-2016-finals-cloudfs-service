@@ -23,4 +23,5 @@ The task of competitors is research app functionality and discover three weaknes
 - createuser -d -s -P cuser (password for cuser: cloudCloud)
 - createdb -O cuser
 - git clone
+- dotnet restore
 - dotnet run
