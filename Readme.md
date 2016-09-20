@@ -21,7 +21,7 @@ The task of competitors is research app functionality and discover three weaknes
 - install dotnet core for you paltform
 - install postgresql 9.4
 - createuser -d -s -P cuser (password for cuser: cloudCloud)
-- createdb -O cuser
+- createdb -O cuser cloudbase
 - git clone
 - dotnet restore
 - dotnet run
