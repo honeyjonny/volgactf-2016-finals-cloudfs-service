@@ -1,28 +1,26 @@
-
-Функциональность:
-
+### Description:
 ---
 
-Пользователь регается, получает уникальный идентификатор себя, Guid, по нему происходит авторизация пользователя в приложении, при авторизации генерируется Id сессии, 
-сессии хранятся в памяти и истекают со временем.
+This is a service for [VolgaCTF 2016 Finals](https://volgactf.ru/) competition.
 
-Будучи авторизованным, пользователь может создавать иерархию папок в своей файловой системе, а так же добавлять в папки файлы - содержимое файлов флаги.
+Backend rest-like web api application, based on [.NET Core](https://www.microsoft.com/net/core) and [ASP.NET Core](http://www.asp.net/core) platfolms.
+On build application assembled as self-contained for specified OS platform.
 
-Протокол создания флага - чекер делает пару вложенных друг в друга папок, случайно выбирая из уже существующих и кладет в последнюю флаг. - UP
+For storing application data used [PostgreSQL](https://www.postgresql.org/) 9.4 database.
 
-flagID = apptoken (надо авторизоваться, чтобы посмотреть файл) + md5(от самого флага + соль в чекере) и получаем флаг по url  /api/files/{flagId}
-
-Есть функия получить файл - **надо придумать какая**, чтобы не было пересечения с уязвимостью выполнения SQL кода.
-
-
-Баги:
-
+### Functionality:
 ---
 
-1.  Баг в том, что слабо генерится сессия, можно получить список пользователей (/api/users), будучи авторзованным и сгенерировать сессии для пользователей, поучить доступ к их файловой системе.
+Application emulates a server side for storing viltual file system.
+All actions like register user, login, add folder to user's filesystem, add file, etc served as HTTP POST/GET requests.
 
-2.  Баг в обработке кук, (параметр apptoken не фильтруется) и можно выполнить произвольный SQL код, который например будет выставлять файлам всех пользователей принадлежность к аккаунту атакующего.
-    и далее он сможет посмотреть все эти файлы.
+The task of competitors is research app functionality and discover three weakneses that lead to vulnerabiluty, that allow for any registered user reads files contents on another users.
 
-3.  Возмжно, баг с залитием файлов на сервер, который позволит скомпрометировать сборку и при перезапуске выполнять MSIL код.
-    3.1     Нужен еще баг, который позволял бы уронить сервис, что его потребовалось бы перезапустить. 
+### Set up:
+---
+- install dotnet core for you paltform
+- install postgresql 9.4
+- createuser -d -s -P cuser (password for cuser: cloudCloud)
+- createdb -O cuser
+- git clone
+- dotnet run
