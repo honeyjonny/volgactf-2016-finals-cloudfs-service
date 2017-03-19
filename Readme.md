@@ -11,7 +11,7 @@ For storing application data used [PostgreSQL](https://www.postgresql.org/) 9.4 
 ### Functionality:
 ---
 
-Application emulates a server side for storing viltual file system.
+Application emulates a server side for storing virtual file system.
 All actions like register user, login, add folder to user's filesystem, add file, etc served as HTTP POST/GET requests.
 
 The task of competitors is research app functionality and discover three weakneses that lead to vulnerabiluty, that allow for any registered user reads files contents on another users.
